@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky{% endblock %}
+{% block page_content %}
+    <div class="page-header">
+        <div class="page-header">
+        <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1> </div>
+        {% if not known %}
+        <p>Pleased to meet you!</p>
+        {% else %}
+        <p>Happy to see you again!</p>
+        {% endif %}
+        <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %} Stranger {% endif %}</h1>
+    </div>
+    {{ wtf.quick_form(form) }}
+    <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+    <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+
+{% endblock %}
+
+<!--
+format('LLL')根据客户端电脑中的时区和区域设置渲染日期和时间。参数决定了渲染的方 式，'L' 到 'LLLL' 分别对应不同的复杂度。
+format() 函数还可接受自定义的格式说明符
+第二行中的 fromNow() 渲染相对时间戳，而且会随着时间的推移自动刷新显示的时间。
+这 个时间戳最开始显示为“a few seconds ago”，但指定refresh参数后，其内容会随着时 间的推移而更新。
+如果一直待在这个页面，几分钟后，会看到显示的文本变成“a minute ago”“2 minutes ago”等。
+
+-->
