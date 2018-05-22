@@ -9,7 +9,13 @@ from .. import db
 from ..main.email import send_email
 from flask_login import current_user
 
-
+@auth.before_app_request
+def before_request():
+    if current_user.is_authenticated:
+            current_user.ping()
+            if not current_user.confirmed \
+                    and request.endpoint[:5] != 'auth.':
+                return redirect(url_for('auth.unconfirmed'))
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -44,16 +50,10 @@ def register():
         token = user.generate_confirmation_token()
         send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token)
         flash('A confirmation email has been sent to you by email.')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
-@auth.before_app_request
-def before_request():
-    if current_user.is_authenticated:
-            current_user.ping()
-            if not current_user.confirmed \
-                    and request.endpoint[:5] != 'auth.':
-                return redirect(url_for('auth.unconfirmed'))
+
 
 @auth.route('/unconfirmed')
 def unconfirmed():
