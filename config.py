@@ -12,7 +12,7 @@ class Config:
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     MAIL_USERNAME = 'lostforsaya@qq.com'
-    MAIL_PASSWORD = 'vhuoeutzttblbgbhx'
+    MAIL_PASSWORD = 'vhuoeutzttblbgbh'
 
     @staticmethod
     def init_app(app):
