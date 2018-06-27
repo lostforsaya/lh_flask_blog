@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
 
 {% block title %}Flasky{% endblock %}
 {% block page_content %}
+    {{ pagedown.include_pagedown() }}
     <div class="page-header">
         <div class="page-header">
         <h1>Hello, {% if current_user.is_authenticated %}{{ current_user.username }}{% else %} Stranger {% endif %}</h1>
@@ -14,6 +16,11 @@
     </div>
 
 {% include '_posts.html' %}
+{% if pagination %}
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, '.index') }}
+    </div>
+{% endif %}
 {% endblock %}
 
 <!--
@@ -22,5 +29,6 @@ format() 函数还可接受自定义的格式说明符
 第二行中的 fromNow() 渲染相对时间戳，而且会随着时间的推移自动刷新显示的时间。
 这 个时间戳最开始显示为“a few seconds ago”，但指定refresh参数后，其内容会随着时 间的推移而更新。
 如果一直待在这个页面，几分钟后，会看到显示的文本变成“a minute ago”“2 minutes ago”等。
+
 
 -->

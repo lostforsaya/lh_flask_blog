@@ -13,7 +13,7 @@ class Config:
     MAIL_USE_SSL = True
     MAIL_USERNAME = 'lostforsaya@qq.com'
     MAIL_PASSWORD = 'vhuoeutzttblbgbh'
-
+    FLASKY_POSTS_PER_PAGE = 20
     @staticmethod
     def init_app(app):
         pass
