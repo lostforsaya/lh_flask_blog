@@ -7,7 +7,8 @@ from flask import current_app, request
 from . import db
 from datetime import datetime
 import hashlib
-
+import bleach
+from markdown import markdown
 
 class Follow(db.Model):
     __tablename__ ='follows'
@@ -271,8 +272,7 @@ class Post(db.Model):
         allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
                         'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
                         'h1', 'h2', 'h3', 'p']
-        target.body_html = bleach.linkify(bleach.clean(
-            markdown(value, output_format='html'),
+        target.body_html = bleach.linkify(bleach.clean(markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
